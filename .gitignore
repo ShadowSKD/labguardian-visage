@@ -174,8 +174,9 @@ dist
 # Finder (MacOS) folder config
 .DS_Store
 
-# Admin logs local
+# Admin logs and clients local
 admin_logs.json
+clients.json
 
 # Client directory logs
 labguardian_client/activity_log.json
