@@ -1,0 +1,52 @@
+@echo off
+setlocal enabledelayedexpansion
+
+echo 🌐 Detecting IPv4 address...
+
+for /f "tokens=2 delims=:" %%a in ('ipconfig ^| findstr /c:"IPv4 Address"') do (
+    set IP=%%a
+    set IP=!IP:~1!
+)
+
+if "%IP%"=="" (
+    echo ❌ Could not detect IPv4 address.
+    exit /b 1
+)
+
+set "API_URL=http://%IP%:5000/api"
+set "ENV_FILE=frontend\.env"
+set "TEMP_FILE=frontend\.env.tmp"
+
+set "BACKEND_ENV_FILE=backend\.env"
+set "BACKEND_TEMP_FILE=backend\.env.tmp"
+
+> "%BACKEND_TEMP_FILE%" (
+    for /f "usebackq delims=" %%i in ("%BACKEND_ENV_FILE%") do (
+        echo %%i | findstr /B "FRONTEND_URL=" >nul
+        if errorlevel 1 (
+            echo %%i
+        )
+    )
+    echo FRONTEND_URL=http://%IP%:3000
+)
+
+move /Y "%BACKEND_TEMP_FILE%" "%BACKEND_ENV_FILE%" >nul
+
+> "%TEMP_FILE%" (
+    for /f "usebackq delims=" %%i in ("%ENV_FILE%") do (
+        echo %%i | findstr /B "VITE_API_URL=" >nul
+        if errorlevel 1 (
+            echo %%i
+        )
+    )
+    echo VITE_API_URL=%API_URL%
+)
+
+move /Y "%TEMP_FILE%" "%ENV_FILE%" >nul
+
+setx VITE_API_URL "%API_URL%" /M
+$env:VITE_API_URL="%API_URL%" 
+
+echo ✅ Updated frontend\.env with VITE_API_URL=%API_URL%
+
+exit /b 0

@@ -1,0 +1,26 @@
+# version: "3.8"
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./backend/.env
+    
+    mem_limit: 512m
+    cpus: 0.5
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_URL: ${VITE_API_URL}
+    ports:
+      - "3000:80"
+    env_file:
+      - ./frontend/.env
+    mem_limit: 256m
+    cpus: 0.25
+    depends_on:
+      - backend
