@@ -308,19 +308,13 @@ services:
 
 ## **Contributors**
 
-| USN         | Name              | Contribution                  |
-|-------------|-------------------|-------------------------------|
-| 2KE21CS100  | Shrinivas Masti   | Testing & Documentation       |
-| 2KE21CS102  | Shripad Kulkarni  | Frontend Development          |
-| 2KE21CS109  | Srinidhi Chappar  | Client Monitoring System      |
-| 2KE21CS113  | Suraj Kr Das      | Backend API Development       |
+| Name              | Contribution                  |
+|-------------------|-------------------------------|
+| Shrinivas Masti   | Testing & Documentation       |
+| Shripad Kulkarni  | Frontend Development          |
+| Srinidhi Chappar  | Client Monitoring System      |
+| Suraj Kr Das      | Backend API Development       |
 
----
-
-## **Acknowledgments**
-
-- **Project Guide**: Mrs. Suman Yaligar
-  - For her invaluable guidance and support throughout the project.
 
 ---
 
