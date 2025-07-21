@@ -43,7 +43,21 @@ export default function Alerts({ labCode }) {
   };
 
   useEffect(() => {
-    fetchAlerts();
+    let prevAlertsCount = 0;
+    const playAlertSound = () => {
+      const audio = new Audio('/alert.mp3');
+      audio.play();
+    };
+
+    const fetchAlertsWithSound = async () => {
+      await fetchAlerts();
+      if (alerts.length > prevAlertsCount) {
+      playAlertSound();
+      }
+      prevAlertsCount = alerts.length;
+    };
+
+    fetchAlertsWithSound();
     const interval = setInterval(fetchAlerts, 7000);
     return () => clearInterval(interval);
   }, [labCode]);
